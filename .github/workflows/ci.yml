@@ -36,10 +36,8 @@ jobs:
 
       - name: 5. Análise de Segurança SAST (CodeQL)
         uses: github/codeql-action/analyze@v3
-        with:
-          languages: javascript
 
       - name: 6. Auditoria de Licenças (FOSSA)
-        uses: fossa/fossa-action@v1
+        uses: fossas/fossa-action@v1
         with:
-          fossa-api-key: ${{ secrets.FOSSA_API_KEY }}
+          api-key: ${{ secrets.FOSSA_API_KEY }}
