@@ -1,0 +1,188 @@
+/* --- Reset Básico e Configurações Globais --- */
+:root {
+  --background-color: #e0e5ec;
+  --primary-color: #4a5a70;
+  --secondary-color: #7b8aa0;
+  --accent-color: #007bff;
+  --danger-color: #dc3545;
+  --light-shadow: rgba(255, 255, 255, 0.9);
+  --dark-shadow: rgba(163, 177, 198, 0.6);
+  --border-radius: 12px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--background-color);
+  color: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+/* --- Container Principal --- */
+.container {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* --- Card Principal --- */
+.card {
+  background: var(--background-color);
+  border-radius: var(--border-radius);
+  padding: 30px;
+  box-shadow: 
+    9px 9px 16px var(--dark-shadow),
+    -9px -9px 16px var(--light-shadow);
+}
+
+.card-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.card-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.card-header p {
+  font-size: 1rem;
+  color: var(--secondary-color);
+}
+
+/* --- Formulário de Adicionar Tarefa --- */
+.add-task-form {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.add-task-form input {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  padding: 15px 20px;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  color: var(--primary-color);
+  background-color: var(--background-color);
+  border-radius: var(--border-radius);
+  box-shadow: 
+    inset 5px 5px 10px var(--dark-shadow),
+    inset -5px -5px 10px var(--light-shadow);
+  transition: box-shadow 0.3s ease;
+}
+
+.add-task-form input::placeholder {
+  color: var(--secondary-color);
+}
+
+.add-task-form button {
+  border: none;
+  background: var(--background-color);
+  color: var(--accent-color);
+  font-size: 1.5rem;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 
+    5px 5px 10px var(--dark-shadow),
+    -5px -5px 10px var(--light-shadow);
+  transition: all 0.3s ease;
+}
+
+.add-task-form button:hover {
+  color: #fff;
+  background-color: var(--accent-color);
+  box-shadow: 
+    inset 2px 2px 5px #0056b3,
+    inset -2px -2px 5px #00aaff;
+}
+
+.add-task-form button:active {
+  transform: scale(0.95);
+}
+
+/* --- Lista de Tarefas --- */
+.task-list-container h2 {
+  font-weight: 500;
+  margin-bottom: 15px;
+  border-bottom: 1px solid var(--dark-shadow);
+  padding-bottom: 10px;
+}
+
+.task-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  background: var(--background-color);
+  border-radius: var(--border-radius);
+  box-shadow: 
+    5px 5px 10px var(--dark-shadow),
+    -5px -5px 10px var(--light-shadow);
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    7px 7px 14px var(--dark-shadow),
+    -7px -7px 14px var(--light-shadow);
+}
+
+.task-item.empty {
+  justify-content: center;
+  color: var(--secondary-color);
+  font-style: italic;
+}
+
+.task-text {
+  flex-grow: 1;
+  margin-right: 15px;
+}
+
+.delete-btn {
+  color: var(--secondary-color);
+  font-size: 1.3rem;
+  text-decoration: none;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.delete-btn:hover {
+  color: var(--danger-color);
+  transform: scale(1.1);
+}
+
+/* --- Rodapé --- */
+footer {
+  text-align: center;
+  color: var(--secondary-color);
+  font-size: 0.9rem;
+}
