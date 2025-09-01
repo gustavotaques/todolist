@@ -1,32 +1,38 @@
+// routes/index.js
 const express = require('express');
 const router = express.Router();
+const logger = require('../logger');
 
-// Usaremos um array em memória para simplicidade
+logger.info('Arquivo de rotas foi carregado.');
+
 let tasks = [
-  { id: 1, text: 'Aprender Node.js', done: false },
-  { id: 2, text: 'Criar um To-Do List', done: true },
-  { id: 3, text: 'Fazer testes de integração', done: false }
+  { id: 1, text: 'Configurar o projeto', done: true },
+  { id: 2, text: 'Enviar logs para o Datadog', done: false }
 ];
-let nextTaskId = 4;
+let nextTaskId = 3;
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
+  logger.info('Página principal carregada com sucesso.');
   res.render('index', { title: 'To-Do List', tasks: tasks });
 });
 
-/* POST para adicionar nova tarefa */
 router.post('/add', function(req, res, next) {
   const { text } = req.body;
   if (text) {
-    tasks.push({ id: nextTaskId++, text: text, done: false });
+    const newTask = { id: nextTaskId++, text: text, done: false };
+    tasks.push(newTask);
+    logger.warn(`Nova tarefa adicionada: { id: ${newTask.id}, text: "${newTask.text}" }`);
   }
   res.redirect('/');
 });
 
-/* GET para deletar uma tarefa */
 router.get('/delete/:id', function(req, res, next) {
   const { id } = req.params;
+  const taskToDelete = tasks.find(task => task.id == id);
   tasks = tasks.filter(task => task.id != id);
+  if (taskToDelete) {
+    logger.error(`Tarefa deletada: { id: ${id}, text: "${taskToDelete.text}" }`);
+  }
   res.redirect('/');
 });
 
