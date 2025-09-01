@@ -34,10 +34,15 @@ jobs:
       - name: 4. Rodar Testes de Integração (e enviar logs)
         run: npm test
 
-      - name: 5. Análise de Segurança SAST (CodeQL)
+      - name: 5. Inicializar CodeQL (Análise SAST)
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript
+
+      - name: 6. Executar Análise com CodeQL
         uses: github/codeql-action/analyze@v3
 
-      - name: 6. Auditoria de Licenças (FOSSA)
+      - name: 7. Rodar Auditoria de Licenças (FOSSA)
         uses: fossas/fossa-action@v1
         with:
           api-key: ${{ secrets.FOSSA_API_KEY }}
