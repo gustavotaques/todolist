@@ -11,6 +11,8 @@ const transports = [
   }),
 ];
 
+// Teste para FOSSA
+
 if (process.env.DATADOG_API_KEY) {
   transports.push(
     new winston.transports.Http({
