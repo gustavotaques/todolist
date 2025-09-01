@@ -36,4 +36,6 @@ router.get('/delete/:id', function(req, res, next) {
   res.redirect('/');
 });
 
+// Apenas um exemplo para testar CodeQL
+
 module.exports = router;
