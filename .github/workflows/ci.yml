@@ -1,0 +1,45 @@
+name: CI Principal (Test, Scan & Audit)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+  security-events: write 
+  actions: read
+
+jobs:
+  build-and-test:
+    name: Build, Test, Scan & Audit
+    runs-on: ubuntu-latest
+
+    env:
+      DATADOG_API_KEY: ${{ secrets.DATADOG_API_KEY }}
+
+    steps:
+      - name: 1. Checkout do Código
+        uses: actions/checkout@v4
+
+      - name: 2. Configurar ambiente Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 3. Instalar Dependências
+        run: npm install
+
+      - name: 4. Rodar Testes de Integração (e enviar logs)
+        run: npm test
+
+      - name: 5. Análise de Segurança SAST (CodeQL)
+        uses: github/codeql-action/analyze@v3
+        with:
+          languages: javascript
+
+      - name: 6. Auditoria de Licenças (FOSSA)
+        uses: fossa/fossa-action@v1
+        with:
+          fossa-api-key: ${{ secrets.FOSSA_API_KEY }}
