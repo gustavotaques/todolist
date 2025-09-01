@@ -5,11 +5,21 @@ const logger = require('../logger');
 
 logger.info('Arquivo de rotas foi carregado.');
 
-let tasks = [
-  { id: 1, text: 'Configurar o projeto', done: true },
-  { id: 2, text: 'Enviar logs para o Datadog', done: false }
+const initialTasks = [
+  { id: 1, text: 'Aprender Node.js', done: false },
+  { id: 2, text: 'Configurar o projeto', done: true }
 ];
-let nextTaskId = 3;
+let tasks = [];
+let nextTaskId;
+
+function resetTasks() {
+  tasks = JSON.parse(JSON.stringify(initialTasks)); // Cria uma cópia profunda para evitar mutação
+  nextTaskId = 3;
+  logger.info('>>> Lista de tarefas resetada para os testes <<<');
+}
+
+// Resetamos uma vez no início
+resetTasks();
 
 router.get('/', function(req, res, next) {
   logger.info('Página principal carregada com sucesso.');
@@ -36,6 +46,5 @@ router.get('/delete/:id', function(req, res, next) {
   res.redirect('/');
 });
 
-// Apenas um exemplo para testar CodeQL
-
-module.exports = router;
+// Exportamos tanto o router quanto a função de reset
+module.exports = { router, resetTasks };

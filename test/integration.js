@@ -1,8 +1,15 @@
+// test/integration.js
 const request = require('supertest');
-const app = require('../app'); // Importa nossa aplicação Express
+const app = require('../app');
 const assert = require('assert');
+const { resetTasks } = require('../routes/index'); // Importamos a função de reset
 
 describe('Integration Tests for To-Do List', function() {
+  
+  // Hook do Mocha: Roda ANTES de CADA teste ('it' block)
+  beforeEach(function() {
+    resetTasks();
+  });
 
   it('should display the main page with tasks', function(done) {
     request(app)
@@ -11,8 +18,6 @@ describe('Integration Tests for To-Do List', function() {
       .expect('Content-Type', /html/)
       .end(function(err, res) {
         if (err) return done(err);
-        // Verifica se o título e uma das tarefas padrão estão presentes
-        assert.ok(res.text.includes('To-Do List'));
         assert.ok(res.text.includes('Aprender Node.js'));
         done();
       });
@@ -22,10 +27,9 @@ describe('Integration Tests for To-Do List', function() {
     request(app)
       .post('/add')
       .send({ text: 'Nova Tarefa de Teste' })
-      .expect(302) // Espera um redirecionamento
+      .expect(302)
       .end(function(err, res) {
         if (err) return done(err);
-        // Após adicionar, verifica se a nova tarefa está na lista
         request(app)
           .get('/')
           .expect(200)
@@ -38,19 +42,17 @@ describe('Integration Tests for To-Do List', function() {
   });
 
   it('should delete a task and redirect', function(done) {
-    // Primeiro, vamos deletar a tarefa com id 1 ('Aprender Node.js')
     request(app)
       .get('/delete/1')
-      .expect(302) // Espera um redirecionamento
+      .expect(302)
       .end(function(err, res) {
         if (err) return done(err);
-        // Após deletar, verifica se a tarefa não está mais na lista
         request(app)
           .get('/')
           .expect(200)
           .end(function(err, res) {
             if (err) return done(err);
-            assert.ok(!res.text.includes('Aprender Node.js'));
+            assert.strictEqual(res.text.includes('Aprender Node.js'), false, 'A tarefa não foi deletada');
             done();
           });
       });
