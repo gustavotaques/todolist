@@ -11,12 +11,10 @@ const transports = [
   }),
 ];
 
-// Teste para FOSSA novamente
-
 if (process.env.DATADOG_API_KEY) {
   transports.push(
     new winston.transports.Http({
-      host: 'http-intake.logs.datadoghq.com',
+      host: 'http-intake.logs.us5.datadoghq.com',
       path: `/api/v2/logs?dd-api-key=${process.env.DATADOG_API_KEY}&ddsource=nodejs&service=todolist-app`,
       ssl: true,
     })
