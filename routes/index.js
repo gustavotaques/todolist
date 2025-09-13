@@ -46,5 +46,16 @@ router.get('/delete/:id', function(req, res, next) {
   res.redirect('/');
 });
 
+// ROTA VULNERÁVEL PARA DEMONSTRAÇÃO DE SAST
+// Esta rota simula uma página de resultados de busca.
+router.get('/search', function(req, res, next) {
+  const query = req.query.q || 'Nenhum termo pesquisado';
+
+  // VULNERABILIDADE DE XSS AQUI!
+  // O parâmetro 'q' da URL é inserido diretamente no HTML da resposta sem
+  // qualquer tipo de sanitização ou escape, permitindo a injeção de scripts.
+  res.send(`<h1>Resultados da busca por: ${query}</h1>`);
+});
+
 // Exportamos tanto o router quanto a função de reset
 module.exports = { router, resetTasks };
