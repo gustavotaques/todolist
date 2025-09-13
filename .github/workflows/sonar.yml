@@ -17,14 +17,10 @@ jobs:
           fetch-depth: 0
 
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
+        # ALTERAÇÃO PRINCIPAL: Trocamos @master pela versão estável @v2
+        uses: SonarSource/sonarcloud-github-action@v2
         env:
           # Passa o token do GitHub para a action (necessário para PRs)
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Passa o token do Sonar que configuramos
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          # Argumentos para o Sonar Scanner
-          args: >
-            -Dsonar.organization=gustavotaques
-            -Dsonar.projectKey=gustavotaques_todolist
